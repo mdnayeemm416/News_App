@@ -43,6 +43,7 @@ dependencies:
   get:
   http:
   cached_network_image:
+  webview_flutter: ^4.4.2
 
 dev_dependencies:
   flutter_test:
