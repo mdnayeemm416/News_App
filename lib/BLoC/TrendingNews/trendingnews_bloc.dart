@@ -17,7 +17,7 @@ class TrendingnewsBloc extends Bloc<TrendingnewsEvent, TrendingnewsState> {
       TrendingNewsDataLoadEvent event, Emitter<TrendingnewsState> emit) async {
     final response = await http.get(
       Uri.parse(
-          'https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=b60a6c2fdacc40cd803256ad6154fbe3'),
+          'https://newsapi.org/v2/everything?domains=wsj.com&apiKey=b60a6c2fdacc40cd803256ad6154fbe3'),
     );
 
     if (response.statusCode == 200) {

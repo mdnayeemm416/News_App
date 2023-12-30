@@ -1,8 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:news_app/AppConstant/app_constant.dart';
 import 'package:news_app/BLoC/CarouselSlider/carousel_slider_bloc.dart';
+import 'package:news_app/views/Article_Web_View/article_web_view.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CarouselSliderWidget extends StatefulWidget {
@@ -33,38 +36,72 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
 
             return Column(
               children: [
-                Container(
-                  child: CarouselSlider.builder(
-                      itemCount: 5,
-                      itemBuilder: (context, index, realIndex) {
-                        return ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(
-                            "images/news.jpg",
-                            fit: BoxFit.cover,
-                            width: MediaQuery.of(context).size.width,
-                          ),
-                        );
-                      },
-                      options: CarouselOptions(
-                        autoPlay: true,
-                        enlargeCenterPage: true,
-                        viewportFraction: 1,
-                        height: MediaQuery.of(context).size.height * .28,
-                        enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            success.activeIndex = index;
-                          });
+                CarouselSlider.builder(
+                    itemCount: success.carouselslidernews.articles.length,
+                    itemBuilder: (context, index, realIndex) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(ArticleWebView(
+                            url: success.carouselslidernews.articles[index].url,
+                          ));
                         },
-                      )),
-                ),
+                        child: Stack(children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: CachedNetworkImage(
+                              errorWidget: (context, url, error) {
+                                return Image.asset('images/news.jpg');
+                              },
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator()),
+                              imageUrl: success
+                                  .carouselslidernews.articles[index].urlToImage
+                                  .toString(),
+                              fit: BoxFit.cover,
+                              width: AppSize.width(context),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            margin: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * .18,
+                            ),
+                            height: AppSize.height(context) * .12,
+                            decoration: const BoxDecoration(
+                                color: Colors.black26,
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10),
+                                    bottomRight: Radius.circular(10))),
+                            child: Text(
+                              success.carouselslidernews.articles[index].title,
+                              maxLines: 2,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          )
+                        ]),
+                      );
+                    },
+                    options: CarouselOptions(
+                      autoPlay: true,
+                      enlargeCenterPage: true,
+                      viewportFraction: 1,
+                      height: MediaQuery.of(context).size.height * .28,
+                      enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      onPageChanged: (index, reason) {
+                        setState(() {
+                          success.activeIndex = index;
+                        });
+                      },
+                    )),
                 const SizedBox(
                   height: 10,
                 ),
                 AnimatedSmoothIndicator(
                   activeIndex: success.activeIndex,
-                  count: 5,
+                  count: success.carouselslidernews.articles.length,
                   effect: const SlideEffect(
                       dotHeight: 10, dotWidth: 12, activeDotColor: blueColor),
                 )
