@@ -50,7 +50,11 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
                             borderRadius: BorderRadius.circular(10),
                             child: CachedNetworkImage(
                               errorWidget: (context, url, error) {
-                                return Image.asset('images/news.jpg');
+                                return Image.asset(
+                                  'images/news.jpg',
+                                  width: AppSize.width(context),
+                                  fit: BoxFit.cover,
+                                );
                               },
                               placeholder: (context, url) => const Center(
                                   child: CircularProgressIndicator()),
@@ -108,7 +112,11 @@ class _CarouselSliderWidgetState extends State<CarouselSliderWidget> {
               ],
             );
           default:
-            return const SizedBox();
+            return SizedBox(
+              height: AppSize.height(context) * .28,
+              width: AppSize.width(context),
+              child: const Center(child: CircularProgressIndicator()),
+            );
         }
       },
     );

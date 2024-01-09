@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/AppConstant/app_constant.dart';
+import 'package:news_app/views/All_News/all_news.dart';
 import 'package:news_app/views/Home/home.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -54,11 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
             Expanded(
               child: TabBarView(children: [
                 Home(),
-                Home(),
-                Home(),
-                Home(),
-                Home(),
-                Home(),
+                AllNewsWiddget(tabName: "business"),
+                AllNewsWiddget(tabName: "entertainment"),
+                AllNewsWiddget(tabName: "general"),
+                AllNewsWiddget(tabName: "health"),
+                AllNewsWiddget(tabName: "sports"),
               ]),
             ),
           ],

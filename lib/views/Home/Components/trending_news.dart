@@ -110,7 +110,8 @@ class _TrendingNewsState extends State<TrendingNews> {
                     }));
 
           default:
-            return const SizedBox();
+            return const Expanded(
+                child: Center(child: CircularProgressIndicator()));
         }
       },
     );

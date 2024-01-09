@@ -22,10 +22,8 @@ class MyApp extends StatelessWidget {
               bodyLarge: TextStyle(fontFamily: "poppins"),
               bodyMedium: TextStyle(fontFamily: "poppins")),
         ),
-        home:
-            //  AnimatedSplashScreen(
-            //     splash: const Image(image: AssetImage("images/newsWatch1.png")),
-            //     nextScreen: const HomeScreen())
-            HomeScreen());
+        home: AnimatedSplashScreen(
+            splash: const Image(image: AssetImage("images/newsWatch1.png")),
+            nextScreen: const HomeScreen()));
   }
 }
